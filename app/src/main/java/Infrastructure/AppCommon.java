@@ -33,16 +33,28 @@ public class AppCommon {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 
-    public void setIsLogin(boolean isLogin) {
+    public void setUserID(String userID) {
         SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
         SharedPreferences.Editor mEditor = mSharedPreferences.edit();
-        mEditor.putBoolean(MYPerference.IS_LOGIN, isLogin);
+        mEditor.putString(MYPerference.USER_ID, userID);
         mEditor.commit();
+    }
+
+    public String getUserID() {
+        SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
+        return mSharedPreferences.getString(MYPerference.USER_ID, "");
     }
 
     public boolean isLogin() {
         SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
         return mSharedPreferences.getBoolean(MYPerference.IS_LOGIN, false);
+    }
+
+    public void setIsLogin(boolean isLogin) {
+        SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        mEditor.putBoolean(MYPerference.IS_LOGIN, isLogin);
+        mEditor.commit();
     }
 
     public static void ClearSharedPreference() {

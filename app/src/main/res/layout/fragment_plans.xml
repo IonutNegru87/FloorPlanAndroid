@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:context="com.adbelsham.HousePlans.PlansFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/plansRecycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:choiceMode="singleChoice"
+        android:divider="#0000FF"
+        android:dividerHeight="2dp" />
+
+</FrameLayout>

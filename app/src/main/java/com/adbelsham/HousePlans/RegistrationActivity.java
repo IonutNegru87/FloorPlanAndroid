@@ -121,8 +121,8 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                Intent homeIntent = new Intent(RegistrationActivity.this, HomeActivity.class);
-                startActivity(homeIntent);
+                Intent loginIntent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
                 RegistrationActivity.this.finish();
             }
         });

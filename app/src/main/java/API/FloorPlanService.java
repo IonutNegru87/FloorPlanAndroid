@@ -2,6 +2,7 @@ package API;
 
 import ApiResponse.LoginResponse;
 import ApiResponse.Registration;
+import ApiResponse.SearchPlanResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -27,4 +28,15 @@ public interface FloorPlanService {
             @Query("device_type") String deviceType,
             @Query("app_id") String appID
     );
+
+    @GET("search.php")
+    Call<SearchPlanResponse> searchPlan(
+            @Query("bathrooms") String bathrooms,
+            @Query("bedrooms") String bedrooms,
+            @Query("toilets") String toilets,
+            @Query("garages") String garages,
+            @Query("is_purchase") String is_purchase,
+            @Query("user_id") String user_id
+    );
+
 }

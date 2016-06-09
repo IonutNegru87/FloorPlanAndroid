@@ -66,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(Response response) {
                     LoginResponse loginResponseObj = (LoginResponse) response.body();
                     if (!Boolean.valueOf(loginResponseObj.getError())) {
+                        AppCommon.getInstance(LoginActivity.this).setIsLogin(true);
+                        AppCommon.getInstance(LoginActivity.this).setUserID(loginResponseObj.getUserDetail().getId());
                         showSuccessfulDialog("Login Successfully!");
                     } else {
                         AppCommon.showDialog(LoginActivity.this, loginResponseObj.getMsg());
