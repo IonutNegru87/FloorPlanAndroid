@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 
-public class SearchPlanResponse {
+public class PlanResponse {
 
     @SerializedName("success")
     public String success;

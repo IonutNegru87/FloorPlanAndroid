@@ -1,8 +1,9 @@
 package API;
 
+import ApiResponse.FavouriteResponse;
 import ApiResponse.LoginResponse;
 import ApiResponse.Registration;
-import ApiResponse.SearchPlanResponse;
+import ApiResponse.PlanResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -30,13 +31,24 @@ public interface FloorPlanService {
     );
 
     @GET("search.php")
-    Call<SearchPlanResponse> searchPlan(
+    Call<PlanResponse> searchPlan(
             @Query("bathrooms") String bathrooms,
             @Query("bedrooms") String bedrooms,
             @Query("toilets") String toilets,
             @Query("garages") String garages,
-            @Query("is_purchase") String is_purchase,
+            @Query("user_id") String user_id,
+            @Query("is_purchase") String is_purchase
+    );
+
+    @GET("get_fav.php")
+    Call<PlanResponse> getFavPlan(
             @Query("user_id") String user_id
+    );
+
+    @GET("favoraties.php")
+    Call<FavouriteResponse> markFavourite(
+            @Query("user_id") String user_id,
+            @Query("plan_id") String plan_id
     );
 
 }

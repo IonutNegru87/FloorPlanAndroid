@@ -1,9 +1,11 @@
 package com.adbelsham.HousePlans;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 public class HomeFragment extends Fragment {
@@ -19,8 +22,31 @@ public class HomeFragment extends Fragment {
     @InjectView(R.id.bedroomSeekBar)
     SeekBar bedRoomSeekBar;
 
+    @InjectView(R.id.bathroomSeekBar)
+    SeekBar bathRoomSeekBar;
+
+    @InjectView(R.id.garagesSeekBar)
+    SeekBar garagesSeeKBar;
+
+    @InjectView(R.id.toiletsSeekBar)
+    SeekBar toiletSeekBar;
+
     @InjectView(R.id.bedroomTextView)
     TextView bedRoomTextView;
+
+    @InjectView(R.id.bathroomTextView)
+    TextView bathRoomTextView;
+
+    @InjectView(R.id.garagesTextView)
+    TextView garagesTextView;
+
+    @InjectView(R.id.toiletTextView)
+    TextView toiletTextView;
+
+    String bathroomNumber = "1";
+    String bedroomNumber = "1";
+    String toiletsNumber = "1";
+    String garagesNumner = "0";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,27 +61,91 @@ public class HomeFragment extends Fragment {
         View mView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.inject(this, mView);
         bedRoomSeekBar.setOnSeekBarChangeListener(new SeekBarListener());
+        bathRoomSeekBar.setOnSeekBarChangeListener(new SeekBarListener());
+        garagesSeeKBar.setOnSeekBarChangeListener(new SeekBarListener());
+        toiletSeekBar.setOnSeekBarChangeListener(new SeekBarListener());
         return mView;
     }
 
+    @OnClick(R.id.viewPlan)
+    public void viewAllPlan() {
+        ((HomeActivity) getActivity()).updateFragment(2);
+    }
+
+    @OnClick(R.id.searchBtn)
+    public void searchBtn() {
+        Intent filteredPlanIntent = new Intent(getActivity(), FilteredPlanActivity.class);
+        filteredPlanIntent.putExtra("bedroom", bedroomNumber);
+        filteredPlanIntent.putExtra("bathroom", bathroomNumber);
+        filteredPlanIntent.putExtra("toilets", toiletsNumber);
+        filteredPlanIntent.putExtra("garages", garagesNumner);
+        getActivity().startActivity(filteredPlanIntent);
+    }
+
     public class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
-        int progress = 0;
+
 
         @Override
-
         public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
-            progress = progresValue;
-            bedRoomTextView.setText("Bedrooms " + progresValue);
+
+            int index = Integer.parseInt(seekBar.getTag().toString());
+            if (index == 1) {
+                int value = 1;
+                if (progresValue > 4) {
+                    value = 4;
+                } else {
+                    if (progresValue < 1) {
+                        value = 1;
+                    } else {
+                        value = progresValue;
+                    }
+                }
+                bedRoomTextView.setText("Bedrooms " + value);
+                bedroomNumber = Integer.toString(value);
+            } else if (index == 2) {
+                int value = 1;
+                if (progresValue > 2) {
+                    value = 2;
+                } else {
+                    if (progresValue < 1) {
+                        value = 1;
+                    } else {
+                        value = progresValue;
+                    }
+                }
+                bathRoomTextView.setText("Bathrooms " + value);
+                bathroomNumber = Integer.toString(value);
+            } else if (index == 3) {
+                int value = 0;
+                if (progresValue > 2) {
+                    value = 2;
+                } else {
+                    value = progresValue;
+                }
+                garagesNumner = Integer.toString(value);
+                garagesTextView.setText("Garages " + value);
+            } else if (index == 4) {
+                int value = 1;
+                if (progresValue > 3) {
+                    value = 3;
+                } else {
+                    if (progresValue < 1) {
+                        value = 1;
+                    } else {
+                        value = progresValue;
+                    }
+                }
+                toiletsNumber = Integer.toString(value);
+                toiletTextView.setText("Toilets " + value);
+            }
         }
 
         @Override
-
         public void onStartTrackingTouch(SeekBar seekBar) {
 
         }
 
         @Override
-
         public void onStopTrackingTouch(SeekBar seekBar) {
 
         }

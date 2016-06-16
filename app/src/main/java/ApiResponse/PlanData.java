@@ -61,6 +61,11 @@ public class PlanData {
     @SerializedName("toilets")
     public String toilets;
 
+    @SerializedName("dimention")
+    public String dimention;
+
+    public boolean isShownSubscribeButton = false;
+
 
     public String getAddress() {
         return address;
@@ -204,5 +209,21 @@ public class PlanData {
 
     public void setToilets(String toilets) {
         this.toilets = toilets;
+    }
+
+    public String getDimention() {
+        return dimention;
+    }
+
+    public void setDimention(String dimention) {
+        this.dimention = dimention;
+    }
+
+    public boolean isShownSubscribeButton() {
+        return isShownSubscribeButton;
+    }
+
+    public void setIsShownSubscribeButton(boolean isShownSubscribeButton) {
+        this.isShownSubscribeButton = isShownSubscribeButton;
     }
 }

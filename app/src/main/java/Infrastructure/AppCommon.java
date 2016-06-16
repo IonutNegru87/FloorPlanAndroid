@@ -5,8 +5,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.DraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -57,6 +65,18 @@ public class AppCommon {
         mEditor.commit();
     }
 
+    public boolean isPurchased() {
+        SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
+        return mSharedPreferences.getBoolean(MYPerference.IS_PURCHASED, false);
+    }
+
+    public void setIsPurchased(boolean isPurchased) {
+        SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        mEditor.putBoolean(MYPerference.IS_PURCHASED, isPurchased);
+        mEditor.commit();
+    }
+
     public static void ClearSharedPreference() {
         SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
         SharedPreferences.Editor mEditor = mSharedPreferences.edit();
@@ -74,5 +94,19 @@ public class AppCommon {
             }
         });
         builder.show();
+    }
+
+    public static DraweeController getDraweeController(DraweeView imageView, String imageUrl, int size) {
+        Uri uri = Uri.parse(imageUrl);
+
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setResizeOptions(new ResizeOptions(size, size))
+                .setProgressiveRenderingEnabled(false)
+                .build();
+
+        return Fresco.newDraweeControllerBuilder()
+                .setOldController(imageView.getController())
+                .setImageRequest(request)
+                .build();
     }
 }

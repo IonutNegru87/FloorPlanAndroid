@@ -71,6 +71,4 @@ public class HomeActivity extends AppCompatActivity {
 
         drawerLayout.closeDrawer(Gravity.LEFT);
     }
-
-
 }

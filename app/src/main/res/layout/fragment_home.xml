@@ -34,9 +34,10 @@
 
                 <SeekBar
                     android:id="@+id/bedroomSeekBar"
-                    android:max="4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:max="15"
+                    android:tag="1" />
 
                 <TextView
                     android:id="@+id/bedroomTextView"
@@ -60,9 +61,12 @@
                 <SeekBar
                     android:id="@+id/bathroomSeekBar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:max="15"
+                    android:tag="2" />
 
                 <TextView
+                    android:id="@+id/bathroomTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -83,13 +87,16 @@
                 <SeekBar
                     android:id="@+id/garagesSeekBar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:max="15"
+                    android:tag="3" />
 
                 <TextView
+                    android:id="@+id/garagesTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Garages 1"
+                    android:text="Garages 0"
                     android:textColor="#00005A" />
 
             </LinearLayout>
@@ -106,9 +113,12 @@
                 <SeekBar
                     android:id="@+id/toiletsSeekBar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:max="15"
+                    android:tag="4" />
 
                 <TextView
+                    android:id="@+id/toiletTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -129,7 +139,7 @@
             android:paddingRight="30dp">
 
             <Button
-                android:id="@+id/searchClick"
+                android:id="@+id/searchBtn"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/violet_corner_button"
