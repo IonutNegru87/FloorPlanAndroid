@@ -68,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
                     if (!Boolean.valueOf(loginResponseObj.getError())) {
                         AppCommon.getInstance(LoginActivity.this).setIsLogin(true);
                         AppCommon.getInstance(LoginActivity.this).setUserID(loginResponseObj.getUserDetail().getId());
+                        AppCommon.getInstance(LoginActivity.this).setLatitude(loginResponseObj.getUserDetail().getLat());
+                        AppCommon.getInstance(LoginActivity.this).setLongitude(loginResponseObj.getUserDetail().getLongt());
                         showSuccessfulDialog("Login Successfully!");
                     } else {
                         AppCommon.showDialog(LoginActivity.this, loginResponseObj.getMsg());

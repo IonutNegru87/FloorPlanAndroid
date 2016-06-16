@@ -1,5 +1,6 @@
 package com.adbelsham.HousePlans;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -54,7 +55,7 @@ public class PlanDetailActivity extends AppCompatActivity {
 
         descTextView.setText(planData.getDimention());
 
-        if (planData.getIs_favorate()==null || planData.getIs_favorate().equals("1")) {
+        if (planData.getIs_favorate() == null || planData.getIs_favorate().equals("1")) {
             favouriteBtn.setVisibility(View.GONE);
         } else {
             favouriteBtn.setVisibility(View.VISIBLE);
@@ -87,6 +88,15 @@ public class PlanDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @OnClick(R.id.seeLocationBtn)
+    public void seeLocationBtn() {
+        Gson gson = new Gson();
+        String planDataString = gson.toJson(planData);
+        Intent mapIntent = new Intent(this, MapsActivity.class);
+        mapIntent.putExtra("detailObj", planDataString);
+        startActivity(mapIntent);
     }
 
 }

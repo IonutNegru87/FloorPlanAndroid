@@ -77,6 +77,40 @@ public class AppCommon {
         mEditor.commit();
     }
 
+    public void setLatitude(String latitude) {
+        SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        mEditor.putString(MYPerference.LATITUDE, latitude);
+        mEditor.commit();
+    }
+
+    public double getLatitude() {
+        SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
+        String latitude = mSharedPreferences.getString(MYPerference.LATITUDE, "");
+        if (!latitude.equals("")) {
+            return Double.parseDouble(latitude);
+        } else {
+            return 0.0;
+        }
+    }
+
+    public void setLongitude(String longitude) {
+        SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        mEditor.putString(MYPerference.LONGITUDE, longitude);
+        mEditor.commit();
+    }
+
+    public double getLongitude() {
+        SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
+        String longitude = mSharedPreferences.getString(MYPerference.LONGITUDE, "");
+        if (!longitude.equals("")) {
+            return Double.parseDouble(longitude);
+        } else {
+            return 0.0;
+        }
+    }
+
     public static void ClearSharedPreference() {
         SharedPreferences mSharedPreferences = mContext.getSharedPreferences(MYPerference.mPREFS_NAME, mContext.MODE_WORLD_READABLE);
         SharedPreferences.Editor mEditor = mSharedPreferences.edit();
