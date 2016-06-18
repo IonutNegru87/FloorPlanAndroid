@@ -67,6 +67,12 @@ public class HomeActivity extends AppCompatActivity {
                         .replace(R.id.content_frame, planFragment)
                         .commit();
                 break;
+            case 3:
+                Fragment settingFragment = new SettingFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, settingFragment)
+                        .commit();
+                break;
         }
 
         drawerLayout.closeDrawer(Gravity.LEFT);

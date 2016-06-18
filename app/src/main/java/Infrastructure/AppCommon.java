@@ -130,7 +130,7 @@ public class AppCommon {
         builder.show();
     }
 
-    public static DraweeController getDraweeController(DraweeView imageView, String imageUrl, int size) {
+    public static DraweeController  getDraweeController(DraweeView imageView, String imageUrl, int size) {
         Uri uri = Uri.parse(imageUrl);
 
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)

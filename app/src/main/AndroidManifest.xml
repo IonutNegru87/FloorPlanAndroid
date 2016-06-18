@@ -67,6 +67,14 @@
         <activity
             android:name=".PurchasePlanActivity"
             android:label="@string/title_activity_purchase_plan"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:label="@string/title_activity_about_us"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PrivacyActivity"
+            android:label="@string/title_activity_privacy"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

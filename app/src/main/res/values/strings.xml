@@ -49,4 +49,17 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_purchase_plan">PurchasePlanActivity</string>
     <string name="purchase_text">This application is for personal use only and not to be used commercially or reproduced in any way. Users may purchase pdf versions of the individual plans and use these privately without copyright implications.</string>
+
+    <string name="FAQ_TEXT">FAQs: Frequently asked ques</string>
+    <string name="Drop_query">Drop us a query</string>
+    <string name="about">About the application</string>
+    <string name="privacy">Privacy</string>
+    <string name="change_password">Change your password</string>
+    <string name="update_location">Update your current location</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_about_us">AboutUsActivity</string>
+
+    <string name="About_us">Floor plans is released by VZ Designs, a building design company that produces residential building plans. They have been designing homes for 20 years.</string>
+    <string name="title_activity_privacy">PrivacyActivity</string>
+
 </resources>
