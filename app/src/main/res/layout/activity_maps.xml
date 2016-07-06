@@ -40,6 +40,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/parentRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="20dp"
@@ -54,8 +55,8 @@
 
             <CustomControls.ZoomableDraweeView
                 android:id="@+id/zoomableDraweeView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:src="@drawable/img_menu"
                 android:layout_centerInParent="true" />
         </RelativeLayout>

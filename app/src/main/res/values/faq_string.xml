@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="faq_ques1">What is FloorPlans?</string>
+    <string name="faq_ques2">What types of plans are there?</string>
+    <string name="faq_ques3">How do I get high quality versions of the plans I like?</string>
+    <string name="faq_ques4">Will there be new plans in the future?</string>
+    <string name="faq_ques5">How much does it cost to go pro?</string>
+    <string name="faq_ques6">How much does a high quality version of the plan cost?</string>
+    <string name="faq_ques7">When entering map view I see a black screen and no map. Why is this happening?</string>
+
+    <string name="faq_ans1">Floor plans is an android and iOS application designed to showcase several floor plans in an easy to view layout. The free version of this application allows you to see 20 plans whereas the pro version of this application will allow you to see the full 200 available plans and also provide you with updates and additional plans in the future.   Browse the plans, keep track of the ones you like in your favourites and search based on your own individual requirements.\n\nThe pro version will also allow you to view the plans on a google map view so you can imagine how the plans you will look and fit on your personal lot.</string>
+    <string name="faq_ans2">There are 200 plans all single storey and ranging from 2 to 4/5 bedrooms.  They are modern, easy to use and proven with many having already been built.  The plans do not include facades or full plans for construction, however with no royalty fees your chosen designer or architect can use the floor plans to complete your individual house design.</string>
+    <string name="faq_ans3">On the Pro and Free versions of the app, you have the option to purchase high quality PDF variants of each plan. This can be done when viewing each plan, simply press the purchase button and enter your email address. Upon purchase, a PDF will be automatically delivered to your chosen email address.  There is no royalty fee so you are free to use the floor plans you like and send them to your chosen designer or architect</string>
+    <string name="faq_ans4">Yes! The pro version of this application will receive updates and new plans for the life of the application. These plans will automatically be available to you when they are released.</string>
+    <string name="faq_ans5">Going pro is a once off $5 USD fee. This will allow you to view all available plans as well as have access to the google maps feature.</string>
+    <string name="faq_ans6">To have a high quality PDF file of your selected plan sent to you is a once off $5 fee.</string>
+    <string name="faq_ans7">This happens because you are currently zoomed in too close and there is not currently any imagery available. To fix this issue zoom out until the map becomes visible.</string>
+
+</resources>

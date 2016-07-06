@@ -11,7 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.adbelsham.HousePlans.AboutUsActivity;
+import com.adbelsham.HousePlans.FAQActivity;
 import com.adbelsham.HousePlans.HomeActivity;
+import com.adbelsham.HousePlans.PrivacyActivity;
 import com.adbelsham.HousePlans.R;
 
 import java.util.ArrayList;
@@ -74,6 +76,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
             int pos = Integer.parseInt(v.getTag().toString());
             switch (pos) {
                 case 0:
+                    Intent faqIntent = new Intent(activityCtx, FAQActivity.class);
+                    activityCtx.startActivity(faqIntent);
                     break;
                 case 1:
                     Intent intent = new Intent(Intent.ACTION_SEND);
@@ -86,6 +90,10 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
                 case 2:
                     Intent aboutUsIntent = new Intent(activityCtx, AboutUsActivity.class);
                     activityCtx.startActivity(aboutUsIntent);
+                    break;
+                case 3:
+                    Intent privacyIntent = new Intent(activityCtx, PrivacyActivity.class);
+                    activityCtx.startActivity(privacyIntent);
                     break;
             }
         }

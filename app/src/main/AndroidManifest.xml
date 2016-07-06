@@ -75,6 +75,10 @@
         <activity
             android:name=".PrivacyActivity"
             android:label="@string/title_activity_privacy"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FAQActivity"
+            android:label="@string/title_activity_faq"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

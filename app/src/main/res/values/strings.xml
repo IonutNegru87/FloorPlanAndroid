@@ -61,5 +61,6 @@
 
     <string name="About_us">Floor plans is released by VZ Designs, a building design company that produces residential building plans. They have been designing homes for 20 years.</string>
     <string name="title_activity_privacy">PrivacyActivity</string>
+    <string name="title_activity_faq">FAQActivity</string>
 
 </resources>

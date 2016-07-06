@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/APP_TITLE"
+                android:text="FAQ's"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -41,14 +41,12 @@
         </RelativeLayout>
 
         <ExpandableListView
-            android:id="@+id/expandableListView"
+            android:id="@+id/faqExpandableList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@android:color/darker_gray"
-            android:dividerHeight="2dp"
-            android:indicatorLeft="?android:attr/expandableListPreferredChildIndicatorLeft">
-
-        </ExpandableListView>
+            android:dividerHeight="1dp"
+            android:indicatorEnd="?android:attr/expandableListPreferredItemIndicatorRight"></ExpandableListView>
 
     </LinearLayout>
 </RelativeLayout>
