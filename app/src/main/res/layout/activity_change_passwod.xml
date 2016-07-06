@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/main_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#60000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Change Password"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <CustomControls.IconTextView
+                android:id="@+id/backArrow"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/arrowleft"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/currentPasswordEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/white_corner_view"
+            android:hint="Enter Your Current Password?"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/newPasswordEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/white_corner_view"
+            android:hint="Enter New Password?"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/confirmPasswordEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/white_corner_view"
+            android:hint="Confirm Your Password?"
+            android:padding="10dp" />
+
+        <Button
+            android:id="@+id/changeClick"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/violet_corner_button"
+            android:text="Change"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+</RelativeLayout>

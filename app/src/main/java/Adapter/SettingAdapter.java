@@ -1,6 +1,8 @@
 package Adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,17 +13,28 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.adbelsham.HousePlans.AboutUsActivity;
+import com.adbelsham.HousePlans.ChangePasswodActivity;
 import com.adbelsham.HousePlans.FAQActivity;
 import com.adbelsham.HousePlans.HomeActivity;
+import com.adbelsham.HousePlans.LoginActivity;
 import com.adbelsham.HousePlans.PrivacyActivity;
 import com.adbelsham.HousePlans.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import API.FloorPlanService;
+import API.ServiceGenerator;
+import ApiResponse.LogoutResponse;
+import ApiResponse.PlanData;
+import ApiResponse.PlanResponse;
+import Infrastructure.AppCommon;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Rohit on 5/13/2016.
@@ -95,6 +108,16 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
                     Intent privacyIntent = new Intent(activityCtx, PrivacyActivity.class);
                     activityCtx.startActivity(privacyIntent);
                     break;
+                case 4:
+                    Intent chgPasswordIntent = new Intent(activityCtx, ChangePasswodActivity.class);
+                    activityCtx.startActivity(chgPasswordIntent);
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    showLogoutDialog();
+                    break;
+
             }
         }
     }
@@ -115,5 +138,50 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
         itemIcons.add(R.drawable.img_chng_password);
         itemIcons.add(R.drawable.img_location);
         itemIcons.add(R.drawable.img_logout);
+    }
+
+    public void showLogoutDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activityCtx);
+        builder.setTitle("Floor Plans");
+        builder.setMessage("Are you sure want to logout?");
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                logoutApi();
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    public void logoutApi() {
+        FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
+        Call call = fp.logoutUser(AppCommon.getInstance(activityCtx).getUserID());
+        call.enqueue(new Callback<LogoutResponse>() {
+            @Override
+            public void onResponse(Response response) {
+                LogoutResponse logoutResponse = (LogoutResponse) response.body();
+                if (logoutResponse.getError().equals("0")) {
+                    AppCommon.showDialog(activityCtx, logoutResponse.getMsg());
+                    AppCommon.ClearSharedPreference();
+                    Intent intent = new Intent(activityCtx, LoginActivity.class);
+                    activityCtx.startActivity(intent);
+                    ((HomeActivity)activityCtx).finish();
+                } else {
+                }
+            }
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
 }

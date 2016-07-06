@@ -2,8 +2,10 @@ package API;
 
 import ApiResponse.FavouriteResponse;
 import ApiResponse.LoginResponse;
+import ApiResponse.LogoutResponse;
 import ApiResponse.Registration;
 import ApiResponse.PlanResponse;
+import ApiResponse.ResetResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -49,6 +51,18 @@ public interface FloorPlanService {
     Call<FavouriteResponse> markFavourite(
             @Query("user_id") String user_id,
             @Query("plan_id") String plan_id
+    );
+
+    @GET("logout.php")
+    Call<LogoutResponse> logoutUser(
+            @Query("id") String user_id
+    );
+
+    @GET("reset_pass.php")
+    Call<ResetResponse> resetPassword(
+            @Query("id") String user_id,
+            @Query("old_password") String oldPassword,
+            @Query("new_password") String newPassword
     );
 
 }
