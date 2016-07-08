@@ -69,7 +69,7 @@ public class ChangePasswodActivity extends AppCompatActivity {
     @OnClick(R.id.changeClick)
     public void changePasswordClick(){
         if(isDataValid()){
-
+            changePasswordApi();
         }
     }
 

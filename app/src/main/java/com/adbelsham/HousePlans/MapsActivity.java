@@ -10,6 +10,7 @@ import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -45,7 +46,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @InjectView(R.id.parentRelativeLayout)
     RelativeLayout parentRelativeLayout;
 
+    @InjectView(R.id.lockPlan)
+    Button locPlanBtn;
+
+    @InjectView(R.id.imageShow)
+    Button imageShow;
+
     PlanData planData;
+
 
     private android.widget.RelativeLayout.LayoutParams layoutParams;
 
@@ -70,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         DraweeController ctrl = Fresco.newDraweeControllerBuilder().setUri(
                 uri).setTapToRetryEnabled(true).build();
         GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
-                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER)
+                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY)
                 .setProgressBarImage(new ProgressBarDrawable())
                 .build();
 
@@ -159,6 +167,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        });
     }
 
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -195,5 +204,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void pdfBtnClick() {
         Intent purchaseActivityIntent = new Intent(this, PurchasePlanActivity.class);
         startActivity(purchaseActivityIntent);
+    }
+
+    @OnClick(R.id.imageShow)
+    public void imageShowClick() {
+        if (locPlanBtn.getVisibility() == View.INVISIBLE) {
+            draweeView.setVisibility(View.VISIBLE);
+            locPlanBtn.setVisibility(View.VISIBLE);
+            imageShow.setText("Image Hide");
+        } else {
+            draweeView.setVisibility(View.GONE);
+            locPlanBtn.setVisibility(View.INVISIBLE);
+            imageShow.setText("Image Show");
+        }
     }
 }

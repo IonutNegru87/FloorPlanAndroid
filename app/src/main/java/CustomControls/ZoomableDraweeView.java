@@ -27,6 +27,7 @@ import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.gestures.GestureDetector;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.DraweeView;
 
@@ -45,7 +46,7 @@ public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy> imple
     private final RectF mImageBounds = new RectF();
     private final RectF mViewBounds = new RectF();
 
-    //GestureDetector mGestureDetector;
+    GestureDetector mGestureDetector;
 
     public OnZoomListener onZoomListener;
 
@@ -108,25 +109,25 @@ public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy> imple
     public ZoomableDraweeView(Context context)
     {
         super(context);
-        init();
+        init(context);
     }
 
     public ZoomableDraweeView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public ZoomableDraweeView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
-        init();
+        init(context);
     }
 
-    private void init()
+    private void init(Context context )
     {
         mZoomableController.setListener(this);
-        // mGestureDetector = new GestureDetector(new GestureListener());
+        mGestureDetector = new GestureDetector(context);
     }
 
     public void setZoomableController(ZoomableController zoomableController)
@@ -209,7 +210,7 @@ public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy> imple
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        // mGestureDetector.onTouchEvent(event);
+         mGestureDetector.onTouchEvent(event);
         if (mZoomableController.onTouchEvent(event))
         {
             if (mZoomableController.getScaleFactor() > 1.0f)

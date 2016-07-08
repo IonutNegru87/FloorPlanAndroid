@@ -99,4 +99,10 @@ public class PlanDetailActivity extends AppCompatActivity {
         startActivity(mapIntent);
     }
 
+    @OnClick(R.id.pdfBtn)
+    public void pdfBtnClick() {
+        Intent purchaseActivityIntent = new Intent(this, PurchasePlanActivity.class);
+        startActivity(purchaseActivityIntent);
+    }
+
 }
