@@ -49,10 +49,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @InjectView(R.id.lockPlan)
     Button locPlanBtn;
 
+    @InjectView(R.id.lockMap)
+    Button lockMapBtn;
+
     @InjectView(R.id.imageShow)
     Button imageShow;
 
     PlanData planData;
+    SupportMapFragment mapFragment;
 
 
     private android.widget.RelativeLayout.LayoutParams layoutParams;
@@ -63,7 +67,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         ButterKnife.inject(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -216,6 +220,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             draweeView.setVisibility(View.GONE);
             locPlanBtn.setVisibility(View.INVISIBLE);
             imageShow.setText("Image Show");
+        }
+    }
+
+    @OnClick(R.id.lockPlan)
+    public void lockPlanBtn() {
+        if (draweeView.isTouchEnable) {
+            locPlanBtn.setText("Unlock Plan");
+            draweeView.isTouchEnable = false;
+        } else {
+            locPlanBtn.setText("Lock Plan");
+            draweeView.isTouchEnable = true;
+        }
+    }
+
+    @OnClick(R.id.lockMap)
+    public void lockMapClick() {
+        if (mMap.getUiSettings().isScrollGesturesEnabled()) {
+            lockMapBtn.setText("Unlock Map");
+            mMap.getUiSettings().setAllGesturesEnabled(false);
+            mMap.getUiSettings().setScrollGesturesEnabled(false);
+        } else {
+            lockMapBtn.setText("Lock Map");
+            mMap.getUiSettings().setScrollGesturesEnabled(true);
+            mMap.getUiSettings().setAllGesturesEnabled(true);
         }
     }
 }

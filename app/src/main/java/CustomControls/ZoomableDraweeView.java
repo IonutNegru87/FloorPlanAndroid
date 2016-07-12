@@ -49,6 +49,7 @@ public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy> imple
     GestureDetector mGestureDetector;
 
     public OnZoomListener onZoomListener;
+    public boolean isTouchEnable=true;
 
     public interface OnZoomListener
     {
@@ -210,7 +211,7 @@ public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy> imple
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-         mGestureDetector.onTouchEvent(event);
+        mGestureDetector.onTouchEvent(event);
         if (mZoomableController.onTouchEvent(event))
         {
             if (mZoomableController.getScaleFactor() > 1.0f)
@@ -218,7 +219,7 @@ public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy> imple
                 getParent().requestDisallowInterceptTouchEvent(true);
             }
             //FLog.v(TAG, "onTouchEvent: view %x, handled by zoomable controller", this.hashCode());
-            return true;
+            return isTouchEnable;
         }
         //FLog.v(TAG, "onTouchEvent: view %x, handled by the super", this.hashCode());
         return super.onTouchEvent(event);
