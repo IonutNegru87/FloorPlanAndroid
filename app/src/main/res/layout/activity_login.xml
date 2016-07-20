@@ -83,6 +83,7 @@
                     android:layout_weight="2.5"
                     android:background="@android:color/transparent"
                     android:hint="Password"
+                    android:inputType="textPassword"
                     android:paddingRight="10dp" />
             </LinearLayout>
 

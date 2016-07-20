@@ -36,6 +36,9 @@
                     android:id="@+id/bedroomSeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:progressDrawable="@drawable/progress"
+                    android:thumb="@drawable/thumb"
+                    android:maxHeight="8dip"
                     android:max="15"
                     android:tag="1" />
 
@@ -62,6 +65,9 @@
                     android:id="@+id/bathroomSeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:progressDrawable="@drawable/progress"
+                    android:thumb="@drawable/thumb"
+                    android:maxHeight="8dip"
                     android:max="15"
                     android:tag="2" />
 
@@ -88,6 +94,9 @@
                     android:id="@+id/garagesSeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:progressDrawable="@drawable/progress"
+                    android:thumb="@drawable/thumb"
+                    android:maxHeight="8dip"
                     android:max="15"
                     android:tag="3" />
 
@@ -97,6 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Garages 0"
+
                     android:textColor="#00005A" />
 
             </LinearLayout>
@@ -114,6 +124,9 @@
                     android:id="@+id/toiletsSeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:progressDrawable="@drawable/progress"
+                    android:thumb="@drawable/thumb"
+                    android:maxHeight="8dip"
                     android:max="15"
                     android:tag="4" />
 
