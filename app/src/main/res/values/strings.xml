@@ -63,4 +63,6 @@
     <string name="title_activity_privacy">PrivacyActivity</string>
     <string name="title_activity_faq">FAQActivity</string>
 
+    <string name="PURCHASE_APP">com.adbelsham.HousePlans</string>
+    <string name="networkTitle">Internet connection is not available.</string>
 </resources>

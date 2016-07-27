@@ -3,6 +3,8 @@ package API;
 import ApiResponse.FavouriteResponse;
 import ApiResponse.LoginResponse;
 import ApiResponse.LogoutResponse;
+import ApiResponse.PlanOrderResponse;
+import ApiResponse.PurchaseAppResponse;
 import ApiResponse.Registration;
 import ApiResponse.PlanResponse;
 import ApiResponse.ResetResponse;
@@ -63,6 +65,18 @@ public interface FloorPlanService {
             @Query("id") String user_id,
             @Query("old_password") String oldPassword,
             @Query("new_password") String newPassword
+    );
+
+    @GET("plan_order.php")
+    Call<PlanOrderResponse> planOrder(
+            @Query("user_id") String user_id,
+            @Query("plan_id") String planID
+    );
+
+    @GET("puchase_app.php")
+    Call<PurchaseAppResponse> purchaseApp(
+            @Query("id") String user_id,
+            @Query("is_purchase") String isPurchase //0,1
     );
 
 }

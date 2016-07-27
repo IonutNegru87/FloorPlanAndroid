@@ -69,6 +69,8 @@ public class PlansFragment extends Fragment {
         call.enqueue(new Callback<PlanResponse>() {
             @Override
             public void onResponse(Response response) {
+               // planDataArrayList.clear();
+               //planRecycleView.removeAllViews();
                 PlanResponse planResponse = (PlanResponse) response.body();
                 if (Boolean.valueOf(planResponse.getSuccess())) {
                     planDataArrayList = planResponse.getPlanDataArrayList();
@@ -90,4 +92,11 @@ public class PlansFragment extends Fragment {
         });
     }
 
+    public void refreshDataAfterIAP() {
+        if (AppCommon.getInstance(getActivity()).isConnectingToInternet(getActivity())) {
+            fetchAllPlans();
+        } else {
+            AppCommon.getInstance(getActivity()).showDialog(getActivity(), getResources().getString(R.string.networkTitle));
+        }
+    }
 }

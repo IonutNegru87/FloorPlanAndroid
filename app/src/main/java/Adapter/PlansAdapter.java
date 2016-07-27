@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import com.adbelsham.HousePlans.HomeActivity;
 import com.adbelsham.HousePlans.PlanDetailActivity;
+import com.adbelsham.HousePlans.PlansFragment;
 import com.adbelsham.HousePlans.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
@@ -38,6 +41,7 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.DataHolder> 
     Activity activityCtx;
     List<PlanData> planDataArrayList;
 
+
     public PlansAdapter(Activity activityCtx, List<PlanData> planDataArrayList) {
         this.activityCtx = activityCtx;
         this.planDataArrayList = planDataArrayList;
@@ -52,7 +56,7 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.DataHolder> 
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.plans_row_item, parent, false);
         }
-        return new DataHolder(view,viewType);
+        return new DataHolder(view, viewType);
     }
 
     @Override
@@ -70,6 +74,8 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.DataHolder> 
             imageUrl = imageUrl.replace(" ", "%20");
 
             holder.planPic.setController(AppCommon.getDraweeController(holder.planPic, imageUrl, 150));
+        } else {
+            holder.subscribeBtn.setVisibility(View.VISIBLE);
         }
     }
 
@@ -94,12 +100,23 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.DataHolder> 
         @InjectView(R.id.planPic)
         SimpleDraweeView planPic;
 
+        Button subscribeBtn;
+
         int viewType;
-        public DataHolder(View itemView,int viewType) {
+
+        public DataHolder(View itemView, int viewType) {
             super(itemView);
-            this.viewType=viewType;
+            this.viewType = viewType;
             if (viewType != 1) {
                 ButterKnife.inject(this, itemView);
+            } else {
+                subscribeBtn = (Button) itemView.findViewById(R.id.subscribeBtn);
+                subscribeBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((HomeActivity) activityCtx).setKey(activityCtx.getResources().getString(R.string.PURCHASE_APP));
+                    }
+                });
             }
         }
 
