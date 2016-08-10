@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -37,6 +38,9 @@ public class PlanDetailActivity extends AppCompatActivity {
 
     @InjectView(R.id.favouriteBtn)
     Button favouriteBtn;
+
+    @InjectView(R.id.progressView)
+    ProgressBar progressView;
 
     PlanData planData;
 
@@ -69,25 +73,32 @@ public class PlanDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.favouriteBtn)
     public void favouriteBtnClick() {
-        FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
-        Call call = fp.markFavourite(AppCommon.getInstance(this).getUserID(), planData.getId());
-        call.enqueue(new Callback<FavouriteResponse>() {
-            @Override
-            public void onResponse(Response response) {
-                FavouriteResponse favouriteResponse = (FavouriteResponse) response.body();
-                if (!Boolean.valueOf(favouriteResponse.getError())) {
-                    AppCommon.showDialog(PlanDetailActivity.this, favouriteResponse.getMsg());
-                    favouriteBtn.setVisibility(View.GONE);
-                } else {
-                    AppCommon.showDialog(PlanDetailActivity.this, favouriteResponse.getMsg());
+        if (AppCommon.isConnectingToInternet(this)) {
+            progressView.setVisibility(View.VISIBLE);
+            FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
+            Call call = fp.markFavourite(AppCommon.getInstance(this).getUserID(), planData.getId());
+            call.enqueue(new Callback<FavouriteResponse>() {
+                @Override
+                public void onResponse(Response response) {
+                    progressView.setVisibility(View.GONE);
+                    FavouriteResponse favouriteResponse = (FavouriteResponse) response.body();
+                    if (!Boolean.valueOf(favouriteResponse.getError())) {
+                        AppCommon.showDialog(PlanDetailActivity.this, favouriteResponse.getMsg());
+                        favouriteBtn.setVisibility(View.GONE);
+                    } else {
+                        AppCommon.showDialog(PlanDetailActivity.this, favouriteResponse.getMsg());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    progressView.setVisibility(View.GONE);
+                }
+            });
+        } else {
+            progressView.setVisibility(View.GONE);
+            AppCommon.showDialog(this, this.getResources().getString(R.string.networkTitle));
+        }
     }
 
     @OnClick(R.id.seeLocationBtn)
@@ -101,7 +112,10 @@ public class PlanDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.pdfBtn)
     public void pdfBtnClick() {
+        Gson gson = new Gson();
+        String planDataString = gson.toJson(planData);
         Intent purchaseActivityIntent = new Intent(this, PurchasePlanActivity.class);
+        purchaseActivityIntent.putExtra("detailObj", planDataString);
         startActivity(purchaseActivityIntent);
     }
 

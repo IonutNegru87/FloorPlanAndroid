@@ -36,10 +36,10 @@ public class HomeActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     public IabHelper mHelper;
     boolean mIsPremium = false;
-    String TAG = "HE";
+    String TAG = "FloorPlan";
     static final int RC_REQUEST = 10001;
     String productID;
-
+    Fragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,27 +64,27 @@ public class HomeActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
             case 0:
-                Fragment fragment = new HomeFragment();
+                 fragment = new HomeFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment)
                         .commit();
                 break;
             case 1:
-                Fragment favouriteFragment = new FavouritesFragment();
+                fragment = new FavouritesFragment();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, favouriteFragment)
+                        .replace(R.id.content_frame, fragment)
                         .commit();
                 break;
             case 2:
-                Fragment planFragment = new PlansFragment();
+                 fragment = new PlansFragment();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, planFragment)
+                        .replace(R.id.content_frame, fragment)
                         .commit();
                 break;
             case 3:
-                Fragment settingFragment = new SettingFragment();
+                fragment = new SettingFragment();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, settingFragment)
+                        .replace(R.id.content_frame, fragment)
                         .commit();
                 break;
         }
@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void setKey(String productID) {
         this.productID = productID;
-        String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiEtSTDk+z+jKZK+LZ0ZpqKyhilOd6H/xY05nnd1GAYv8imYjkOfMuCtnbXOYl2IsoNnNJ3+ABgVBHKk0+EbRHt3dAYUVQLSifIV79UcIcoLK8Bc7ZMfjHC1n0FChLo/5NLJHbotJPnVjJd6zB+OcquvmIRGE2dpTAz4PiCiHLrUIJT44+rIoFnBvK1oXpyFxG0C0rVdN/JoD7862WyM/CDXLihsGTy5rl2N3JQikJ1bHZAD3ES3OgQNAoCNzA8Ag7gRHJbF2fH+KHkz0MW20BqbTOEgEzKSAU7ycV5V3Z19DhFal2j1/kNoN4OGJrtOUn+5IWqLwJuaYNWj6kBXmJwIDAQAB";
+        String base64EncodedPublicKey =  getResources().getString(R.string.IAP_BASE64_String);
         if (base64EncodedPublicKey.contains("CONSTRUCT_YOUR")) {
             throw new RuntimeException(
                     "Please put your app's public key in MainActivity.java. See README.");
@@ -157,7 +157,9 @@ public class HomeActivity extends AppCompatActivity {
         if (pID.equals(this.getResources().getString(
                 R.string.PURCHASE_APP))) {
             AppCommon.getInstance(this).setIsPurchased(true);
-            //((PlansFragment) this.fragmentCtx).refreshDataAfterIAP();
+            if(fragment instanceof PlansFragment) {
+                ((PlansFragment) fragment).refreshDataAfterIAP();
+            }
         }
     }
 
@@ -177,19 +179,14 @@ public class HomeActivity extends AppCompatActivity {
             // if we were disposed of in the meantime, quit.
             if (mHelper == null)
                 return;
-
             if (result.isFailure()) {
                 complain("Error purchasing: " + result);
-
                 return;
             }
             if (!verifyDeveloperPayload(purchase)) {
                 complain("Error purchasing. Authenticity verification failed.");
-
                 return;
             }
-
-            Log.d(TAG, "Purchase successful.");
             if (purchase.getSku().equals(productID)) {
                 Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
                 alert("Thank you for upgrading to premium!");

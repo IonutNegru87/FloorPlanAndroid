@@ -163,25 +163,30 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
     }
 
     public void logoutApi() {
-        FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
-        Call call = fp.logoutUser(AppCommon.getInstance(activityCtx).getUserID());
-        call.enqueue(new Callback<LogoutResponse>() {
-            @Override
-            public void onResponse(Response response) {
-                LogoutResponse logoutResponse = (LogoutResponse) response.body();
-                if (logoutResponse.getError().equals("0")) {
-                    AppCommon.showDialog(activityCtx, logoutResponse.getMsg());
-                    AppCommon.ClearSharedPreference();
-                    Intent intent = new Intent(activityCtx, LoginActivity.class);
-                    activityCtx.startActivity(intent);
-                    ((HomeActivity)activityCtx).finish();
-                } else {
+        if (AppCommon.isConnectingToInternet(activityCtx)) {
+            FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
+            Call call = fp.logoutUser(AppCommon.getInstance(activityCtx).getUserID());
+            call.enqueue(new Callback<LogoutResponse>() {
+                @Override
+                public void onResponse(Response response) {
+                    LogoutResponse logoutResponse = (LogoutResponse) response.body();
+                    if (logoutResponse.getError().equals("0")) {
+                        AppCommon.showDialog(activityCtx, logoutResponse.getMsg());
+                        AppCommon.ClearSharedPreference();
+                        Intent intent = new Intent(activityCtx, LoginActivity.class);
+                        activityCtx.startActivity(intent);
+                        ((HomeActivity) activityCtx).finish();
+                    } else {
+                    }
                 }
-            }
-            @Override
-            public void onFailure(Throwable t) {
 
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
+        }else{
+            AppCommon.showDialog(activityCtx, activityCtx.getResources().getString(R.string.networkTitle));
+        }
     }
 }

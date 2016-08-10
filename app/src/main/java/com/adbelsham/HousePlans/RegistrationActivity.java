@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import API.FloorPlanService;
 import API.ServiceGenerator;
@@ -30,6 +32,9 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText passwordEditText;
     @InjectView(R.id.confirmPasswordEditText)
     EditText confirmPasswordEditText;
+
+    @InjectView(R.id.progressView)
+    ProgressBar progressView;
 
     GPSTracker gpsTracker;
     String emailID;
@@ -87,30 +92,36 @@ public class RegistrationActivity extends AppCompatActivity {
     @OnClick(R.id.registerButton)
     public void registerButtonClick() {
         if (isDataValid()) {
+            if (AppCommon.isConnectingToInternet(this)) {
+                progressView.setVisibility(View.VISIBLE);
+                String android_id = Settings.Secure.getString(this.getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+                double latitude = gpsTracker.getLatitude();
+                double longitude = gpsTracker.getLongitude();
 
-            String android_id = Settings.Secure.getString(this.getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
-            double latitude = gpsTracker.getLatitude();
-            double longitude = gpsTracker.getLongitude();
-
-            FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
-            Call call = fp.registerUser(emailID, password, "android", android_id, "dev-signup", Double.toString(latitude), Double.toString(longitude));
-            call.enqueue(new Callback<Registration>() {
-                @Override
-                public void onResponse(Response response) {
-                    ApiResponse.Registration registrationObj = (Registration) response.body();
-                    if (registrationObj.getSuccess().equals("success")) {
-                        showSuccessfulDialog("Registration Successfully!");
-                    } else {
-                        AppCommon.showDialog(RegistrationActivity.this, registrationObj.getMsg());
+                FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
+                Call call = fp.registerUser(emailID, password, "android", android_id, "dev-signup", Double.toString(latitude), Double.toString(longitude));
+                call.enqueue(new Callback<Registration>() {
+                    @Override
+                    public void onResponse(Response response) {
+                        progressView.setVisibility(View.GONE);
+                        ApiResponse.Registration registrationObj = (Registration) response.body();
+                        if (registrationObj.getSuccess().equals("success")) {
+                            showSuccessfulDialog("Registration Successfully!");
+                        } else {
+                            AppCommon.showDialog(RegistrationActivity.this, registrationObj.getMsg());
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Throwable t) {
-                    Log.v("Success", "" + t.toString());
-                }
-            });
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Log.v("Success", "" + t.toString());
+                    }
+                });
+            }
+        } else {
+            progressView.setVisibility(View.GONE);
+            AppCommon.showDialog(this, this.getResources().getString(R.string.networkTitle));
         }
     }
 

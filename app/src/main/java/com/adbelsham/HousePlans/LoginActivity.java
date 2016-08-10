@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import API.FloorPlanService;
 import API.ServiceGenerator;
@@ -26,6 +28,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailEditText;
     @InjectView(R.id.passwordEditText)
     EditText passwordEditText;
+
+    @InjectView(R.id.progressView)
+    ProgressBar progressView;
 
     String emailID;
     String password;
@@ -57,30 +62,37 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.loginClick)
     public void loginClick() {
         if (isDataValid()) {
-            String android_id = Settings.Secure.getString(this.getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
-            FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
-            Call call = fp.loginUser(emailID, password, android_id, "android", "");
-            call.enqueue(new Callback<LoginResponse>() {
-                @Override
-                public void onResponse(Response response) {
-                    LoginResponse loginResponseObj = (LoginResponse) response.body();
-                    if (!Boolean.valueOf(loginResponseObj.getError())) {
-                        AppCommon.getInstance(LoginActivity.this).setIsLogin(true);
-                        AppCommon.getInstance(LoginActivity.this).setUserID(loginResponseObj.getUserDetail().getId());
-                        AppCommon.getInstance(LoginActivity.this).setLatitude(loginResponseObj.getUserDetail().getLat());
-                        AppCommon.getInstance(LoginActivity.this).setLongitude(loginResponseObj.getUserDetail().getLongt());
-                        showSuccessfulDialog("Login Successfully!");
-                    } else {
-                        AppCommon.showDialog(LoginActivity.this, loginResponseObj.getMsg());
+            if (AppCommon.isConnectingToInternet(this)) {
+                progressView.setVisibility(View.VISIBLE);
+                String android_id = Settings.Secure.getString(this.getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+                FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
+                Call call = fp.loginUser(emailID, password, android_id, "android", "");
+                call.enqueue(new Callback<LoginResponse>() {
+                    @Override
+                    public void onResponse(Response response) {
+                        progressView.setVisibility(View.GONE);
+                        LoginResponse loginResponseObj = (LoginResponse) response.body();
+                        if (!Boolean.valueOf(loginResponseObj.getError())) {
+                            AppCommon.getInstance(LoginActivity.this).setIsLogin(true);
+                            AppCommon.getInstance(LoginActivity.this).setUserID(loginResponseObj.getUserDetail().getId());
+                            AppCommon.getInstance(LoginActivity.this).setLatitude(loginResponseObj.getUserDetail().getLat());
+                            AppCommon.getInstance(LoginActivity.this).setLongitude(loginResponseObj.getUserDetail().getLongt());
+                            showSuccessfulDialog("Login Successfully!");
+                        } else {
+                            AppCommon.showDialog(LoginActivity.this, loginResponseObj.getMsg());
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Throwable t) {
-
-                }
-            });
+                    @Override
+                    public void onFailure(Throwable t) {
+                        progressView.setVisibility(View.GONE);
+                    }
+                });
+            }
+        } else {
+            progressView.setVisibility(View.GONE);
+            AppCommon.showDialog(this, this.getResources().getString(R.string.networkTitle));
         }
     }
 

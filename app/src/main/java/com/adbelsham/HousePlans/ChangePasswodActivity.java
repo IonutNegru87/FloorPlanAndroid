@@ -3,7 +3,9 @@ package com.adbelsham.HousePlans;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import API.FloorPlanService;
 import API.ServiceGenerator;
@@ -28,6 +30,9 @@ public class ChangePasswodActivity extends AppCompatActivity {
 
     @InjectView(R.id.confirmPasswordEditText)
     EditText confirmPasswordEditText;
+
+    @InjectView(R.id.progressView)
+    ProgressBar progressView;
 
     String currentPassword;
     String newPassword;
@@ -74,21 +79,29 @@ public class ChangePasswodActivity extends AppCompatActivity {
     }
 
     public void changePasswordApi() {
-        FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
-        Call call = fp.resetPassword(AppCommon.getInstance(this).getUserID(), currentPassword, newPassword);
-        call.enqueue(new Callback<ResetResponse>() {
-            @Override
-            public void onResponse(Response response) {
-                ResetResponse resetResponse = (ResetResponse) response.body();
-                if (resetResponse.getError().equals("0")) {
-                    AppCommon.showDialog(ChangePasswodActivity.this, resetResponse.getMsg());
-                } else {
+        if (AppCommon.isConnectingToInternet(this)) {
+            progressView.setVisibility(View.VISIBLE);
+            FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
+            Call call = fp.resetPassword(AppCommon.getInstance(this).getUserID(), currentPassword, newPassword);
+            call.enqueue(new Callback<ResetResponse>() {
+                @Override
+                public void onResponse(Response response) {
+                    progressView.setVisibility(View.GONE);
+                    ResetResponse resetResponse = (ResetResponse) response.body();
+                    if (resetResponse.getError().equals("0")) {
+                        AppCommon.showDialog(ChangePasswodActivity.this, resetResponse.getMsg());
+                    } else {
+                    }
                 }
-            }
-            @Override
-            public void onFailure(Throwable t) {
 
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    progressView.setVisibility(View.GONE);
+                }
+            });
+        }else{
+            progressView.setVisibility(View.GONE);
+            AppCommon.showDialog(this, this.getResources().getString(R.string.networkTitle));
+        }
     }
 }

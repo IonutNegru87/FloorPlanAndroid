@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -27,6 +28,9 @@ public class FavouritesFragment extends Fragment {
 
     @InjectView(R.id.favouritesRecycleView)
     RecyclerView favouritesRecycleView;
+
+    @InjectView(R.id.progressView)
+    ProgressBar progressView;
 
     List<PlanData> planDataList;
 
@@ -50,25 +54,32 @@ public class FavouritesFragment extends Fragment {
     }
 
     public void getFavouritePlan() {
-        FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
-        Call call = fp.getFavPlan(AppCommon.getInstance(getActivity()).getUserID());
-        call.enqueue(new Callback<PlanResponse>() {
-            @Override
-            public void onResponse(Response response) {
-                PlanResponse planResponse = (PlanResponse) response.body();
-                if (Boolean.valueOf(planResponse.getSuccess())) {
-                    planDataList = planResponse.getPlanDataArrayList();
-                    plansAdapter = new PlansAdapter(getActivity(), planDataList);
-                    favouritesRecycleView.setAdapter(plansAdapter);
-                } else {
+        if (AppCommon.isConnectingToInternet(getActivity())) {
+            progressView.setVisibility(View.VISIBLE);
+            FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
+            Call call = fp.getFavPlan(AppCommon.getInstance(getActivity()).getUserID());
+            call.enqueue(new Callback<PlanResponse>() {
+                @Override
+                public void onResponse(Response response) {
+                    progressView.setVisibility(View.GONE);
+                    PlanResponse planResponse = (PlanResponse) response.body();
+                    if (Boolean.valueOf(planResponse.getSuccess())) {
+                        planDataList = planResponse.getPlanDataArrayList();
+                        plansAdapter = new PlansAdapter(getActivity(), planDataList);
+                        favouritesRecycleView.setAdapter(plansAdapter);
+                    } else {
 
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    progressView.setVisibility(View.GONE);
+                }
+            });
+        } else {
+            progressView.setVisibility(View.GONE);
+            AppCommon.showDialog(getActivity(), this.getResources().getString(R.string.networkTitle));
+        }
     }
 }

@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -31,6 +32,9 @@ public class FilteredPlanActivity extends AppCompatActivity {
 
     List<PlanData> planDataArrayList;
     PlansAdapter plansAdapter;
+    @InjectView(R.id.progressView)
+    ProgressBar progressView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,24 +52,31 @@ public class FilteredPlanActivity extends AppCompatActivity {
     }
 
     public void fetchAllPlans(String bathroom, String bedroom, String toilets, String garages) {
-        FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
-        Call call = fp.searchPlan(bathroom, bedroom, toilets, garages, AppCommon.getInstance(this).getUserID(), Boolean.toString(AppCommon.getInstance(this).isPurchased()));
-        call.enqueue(new Callback<PlanResponse>() {
-            @Override
-            public void onResponse(Response response) {
-                PlanResponse planResponse = (PlanResponse) response.body();
-                if (Boolean.valueOf(planResponse.getSuccess())) {
-                    planDataArrayList = planResponse.getPlanDataArrayList();
-                    plansAdapter = new PlansAdapter(FilteredPlanActivity.this, planDataArrayList);
-                    filteredPlanRecycleView.setAdapter(plansAdapter);
+        if (AppCommon.isConnectingToInternet(this)) {
+            progressView.setVisibility(View.VISIBLE);
+            FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
+            Call call = fp.searchPlan(bathroom, bedroom, toilets, garages, AppCommon.getInstance(this).getUserID(), Boolean.toString(AppCommon.getInstance(this).isPurchased()));
+            call.enqueue(new Callback<PlanResponse>() {
+                @Override
+                public void onResponse(Response response) {
+                    progressView.setVisibility(View.GONE);
+                    PlanResponse planResponse = (PlanResponse) response.body();
+                    if (Boolean.valueOf(planResponse.getSuccess())) {
+                        planDataArrayList = planResponse.getPlanDataArrayList();
+                        plansAdapter = new PlansAdapter(FilteredPlanActivity.this, planDataArrayList);
+                        filteredPlanRecycleView.setAdapter(plansAdapter);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    progressView.setVisibility(View.GONE);
+                }
+            });
+        } else {
+            progressView.setVisibility(View.GONE);
+            AppCommon.showDialog(this, this.getResources().getString(R.string.networkTitle));
+        }
     }
 
     @OnClick(R.id.backArrow)
