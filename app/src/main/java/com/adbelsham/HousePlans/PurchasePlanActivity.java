@@ -161,6 +161,7 @@ public class PurchasePlanActivity extends AppCompatActivity {
                 alert("Thank you for upgrading to premium!");
                 mIsPremium = true;
                 setData(purchase.getSku());
+                mHelper.consumeAsync(purchase, mConsumeFinishedListener);
             }
         }
     };

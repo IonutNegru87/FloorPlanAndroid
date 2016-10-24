@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(Response response) {
                         progressView.setVisibility(View.GONE);
                         LoginResponse loginResponseObj = (LoginResponse) response.body();
-                        if (!Boolean.valueOf(loginResponseObj.getError())) {
+                        if (loginResponseObj.getError().equals("0")) {
                             AppCommon.getInstance(LoginActivity.this).setIsLogin(true);
                             AppCommon.getInstance(LoginActivity.this).setUserID(loginResponseObj.getUserDetail().getId());
                             AppCommon.getInstance(LoginActivity.this).setLatitude(loginResponseObj.getUserDetail().getLat());

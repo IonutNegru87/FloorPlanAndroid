@@ -119,4 +119,13 @@ public class PlanDetailActivity extends AppCompatActivity {
         startActivity(purchaseActivityIntent);
     }
 
+    @OnClick(R.id.planPic)
+    public void picClick(){
+        Gson gson = new Gson();
+        String planDataString = gson.toJson(planData);
+        Intent fullPlanActivityIntent = new Intent(this, FullPlanActivity.class);
+        fullPlanActivityIntent.putExtra("detailObj", planDataString);
+        startActivity(fullPlanActivityIntent);
+    }
+
 }

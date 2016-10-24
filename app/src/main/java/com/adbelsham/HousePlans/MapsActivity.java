@@ -14,11 +14,15 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -79,10 +83,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String imageUrl = planData.getPlan_thumb();
         imageUrl = imageUrl.replace(" ", "%20");
         Uri uri = Uri.parse(imageUrl);
+
+//        int width = 50, height = 50;
+//        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+//                .setResizeOptions(new ResizeOptions(width, height))
+//                .build();
+//        DraweeController controller = Fresco.newDraweeControllerBuilder()
+//                .setOldController(draweeView.getController())
+//                .setImageRequest(request)
+//                .build();
+//        draweeView.setController(controller);
+
         DraweeController ctrl = Fresco.newDraweeControllerBuilder().setUri(
                 uri).setTapToRetryEnabled(true).build();
         GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
-                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY)
                 .setProgressBarImage(new ProgressBarDrawable())
                 .build();
 
@@ -206,7 +220,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @OnClick(R.id.pdfBtnClick)
     public void pdfBtnClick() {
+        Gson gson = new Gson();
+        String planDataString = gson.toJson(planData);
         Intent purchaseActivityIntent = new Intent(this, PurchasePlanActivity.class);
+        purchaseActivityIntent.putExtra("detailObj", planDataString);
         startActivity(purchaseActivityIntent);
     }
 
