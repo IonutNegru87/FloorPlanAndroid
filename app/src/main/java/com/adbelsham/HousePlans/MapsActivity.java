@@ -74,7 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        //draweeView.updateBoundByMapView(parentRelativeLayout);
         gpsTracker = new GPSTracker(this);
 
         Gson gson = new Gson();
@@ -99,90 +99,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
                 .setProgressBarImage(new ProgressBarDrawable())
                 .build();
-
         draweeView.setController(ctrl);
         draweeView.setHierarchy(hierarchy);
 
-//        draweeView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent event) {
-//                final int X = (int) event.getRawX();
-//                final int Y = (int) event.getRawY();
-//                switch (event.getAction() & MotionEvent.ACTION_MASK) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-//                        _xDelta = X - lParams.leftMargin;
-//                        _yDelta = Y - lParams.topMargin;
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        break;
-//                    case MotionEvent.ACTION_POINTER_DOWN:
-//                        break;
-//                    case MotionEvent.ACTION_POINTER_UP:
-//                        break;
-//                    case MotionEvent.ACTION_MOVE:
-//                        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-//                        layoutParams.leftMargin = X - _xDelta;
-//                        layoutParams.topMargin = Y - _yDelta;
-//                        layoutParams.rightMargin = -250;
-//                        layoutParams.bottomMargin = -250;
-//                        view.setLayoutParams(layoutParams);
-//                        break;
-//                }
-//                //_root.invalidate();
-//                return true;
-//            }
-//        });
-
-//        draweeView.setOnDragListener(new View.OnDragListener() {
-//            @Override
-//            public boolean onDrag(View v, DragEvent event) {
-//                switch(event.getAction())
-//                {
-//                    case DragEvent.ACTION_DRAG_STARTED:
-//                        layoutParams = (RelativeLayout.LayoutParams)v.getLayoutParams();
-//                        Log.d("Test", "Action is DragEvent.ACTION_DRAG_STARTED");
-//
-//                        // Do nothing
-//                        break;
-//
-//                    case DragEvent.ACTION_DRAG_ENTERED:
-//                        Log.d("Test", "Action is DragEvent.ACTION_DRAG_ENTERED");
-//                        int x_cord = (int) event.getX();
-//                        int y_cord = (int) event.getY();
-//                        break;
-//
-//                    case DragEvent.ACTION_DRAG_EXITED :
-//                        Log.d("Test", "Action is DragEvent.ACTION_DRAG_EXITED");
-//                        x_cord = (int) event.getX();
-//                        y_cord = (int) event.getY();
-//                        layoutParams.leftMargin = x_cord;
-//                        layoutParams.topMargin = y_cord;
-//                        v.setLayoutParams(layoutParams);
-//                        break;
-//
-//                    case DragEvent.ACTION_DRAG_LOCATION  :
-//                        Log.d("Test", "Action is DragEvent.ACTION_DRAG_LOCATION");
-//                        x_cord = (int) event.getX();
-//                        y_cord = (int) event.getY();
-//                        break;
-//
-//                    case DragEvent.ACTION_DRAG_ENDED   :
-//                        Log.d("Test", "Action is DragEvent.ACTION_DRAG_ENDED");
-//
-//                        // Do nothing
-//                        break;
-//
-//                    case DragEvent.ACTION_DROP:
-//                        Log.d("Test", "ACTION_DROP event");
-//
-//                        // Do nothing
-//                        break;
-//                    default: break;
-//                }
-//                return true;
-//            }
-//        });
     }
 
 

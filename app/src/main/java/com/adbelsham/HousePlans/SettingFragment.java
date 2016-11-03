@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import Adapter.SettingAdapter;
+import Infrastructure.AppCommon;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -17,6 +18,8 @@ public class SettingFragment extends Fragment {
 
     @InjectView(R.id.settingRecycleView)
     RecyclerView settingRecycleView;
+
+    SettingAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,9 +36,18 @@ public class SettingFragment extends Fragment {
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         settingRecycleView.setLayoutManager(mLinearLayoutManager);
 
-        SettingAdapter adapter = new SettingAdapter(getActivity());
+        adapter = new SettingAdapter(getActivity());
         settingRecycleView.setAdapter(adapter);
         return mView;
+    }
+
+    public void updateLocation(String latitude, String longitude) {
+        if (adapter.gpsTracker != null) {
+            AppCommon.getInstance(getActivity()).setLatitude(latitude);
+            AppCommon.getInstance(getActivity()).setLongitude(longitude);
+            AppCommon.showDialog(getActivity(), "Location update successfully!");
+            adapter.makeTrackerNil();
+        }
     }
 
 }

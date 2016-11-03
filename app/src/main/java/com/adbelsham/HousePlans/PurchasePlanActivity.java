@@ -223,7 +223,6 @@ public class PurchasePlanActivity extends AppCompatActivity {
 
         @Override
         protected Bitmap doInBackground(String... params) {
-            String id = params[0];
             String add = planData.getPlan_image();
             URL url = null;
             Bitmap image = null;

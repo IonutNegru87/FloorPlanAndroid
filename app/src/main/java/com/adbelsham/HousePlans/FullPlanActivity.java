@@ -35,7 +35,7 @@ public class FullPlanActivity extends AppCompatActivity {
         Gson gson = new Gson();
         planData = gson.fromJson(getIntent().getExtras().getString("detailObj"), PlanData.class);
 
-        String imageUrl = planData.getPlan_thumb();
+        String imageUrl = planData.getPlan_image();
         imageUrl = imageUrl.replace(" ", "%20");
         Uri uri = Uri.parse(imageUrl);
         DraweeController ctrl = Fresco.newDraweeControllerBuilder().setUri(
@@ -44,7 +44,8 @@ public class FullPlanActivity extends AppCompatActivity {
                 .setProgressBarImage(new ProgressBarDrawable())
                 .build();
 
-        draweeView.setController(ctrl);
+        draweeView.setController(AppCommon.getDraweeController(draweeView, imageUrl, 1000));
+       // draweeView.setController(ctrl);
         draweeView.setHierarchy(hierarchy);
     }
 

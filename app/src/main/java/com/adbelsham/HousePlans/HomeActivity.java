@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     static final int RC_REQUEST = 10001;
     String productID;
     Fragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
             case 0:
-                 fragment = new HomeFragment();
+                fragment = new HomeFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment)
                         .commit();
@@ -76,7 +77,7 @@ public class HomeActivity extends AppCompatActivity {
                         .commit();
                 break;
             case 2:
-                 fragment = new PlansFragment();
+                fragment = new PlansFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment)
                         .commit();
@@ -95,7 +96,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void setKey(String productID) {
         this.productID = productID;
-        String base64EncodedPublicKey =  getResources().getString(R.string.IAP_BASE64_String);
+        String base64EncodedPublicKey = getResources().getString(R.string.IAP_BASE64_String);
         if (base64EncodedPublicKey.contains("CONSTRUCT_YOUR")) {
             throw new RuntimeException(
                     "Please put your app's public key in MainActivity.java. See README.");
@@ -157,7 +158,7 @@ public class HomeActivity extends AppCompatActivity {
         if (pID.equals(this.getResources().getString(
                 R.string.PURCHASE_APP))) {
             AppCommon.getInstance(this).setIsPurchased(true);
-            if(fragment instanceof PlansFragment) {
+            if (fragment instanceof PlansFragment) {
                 ((PlansFragment) fragment).refreshDataAfterIAP();
             }
         }
@@ -241,6 +242,12 @@ public class HomeActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         } else {
 
+        }
+    }
+
+    public void setLocation(String latitude, String longitude) {
+        if (fragment instanceof SettingFragment) {
+            ((SettingFragment) fragment).updateLocation(latitude, longitude);
         }
     }
 }

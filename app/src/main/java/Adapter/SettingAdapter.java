@@ -29,6 +29,7 @@ import ApiResponse.LogoutResponse;
 import ApiResponse.PlanData;
 import ApiResponse.PlanResponse;
 import Infrastructure.AppCommon;
+import LocationInfra.GPSTracker;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -44,7 +45,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
     private List<String> itemData = new ArrayList<String>();
     private List<Integer> itemIcons = new ArrayList<Integer>();
     Activity activityCtx;
-
+    public GPSTracker gpsTracker;
     public SettingAdapter(Activity activityCtx) {
         this.activityCtx = activityCtx;
         makeData();
@@ -78,6 +79,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
 
         @InjectView(R.id.parentLayout)
         RelativeLayout parentLayout;
+
+
 
         public DataHolder(View itemView) {
             super(itemView);
@@ -113,6 +116,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
                     activityCtx.startActivity(chgPasswordIntent);
                     break;
                 case 5:
+                    gpsTracker = new GPSTracker(activityCtx);
                     break;
                 case 6:
                     showLogoutDialog();
@@ -188,5 +192,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
         }else{
             AppCommon.showDialog(activityCtx, activityCtx.getResources().getString(R.string.networkTitle));
         }
+    }
+
+    public void makeTrackerNil(){
+        gpsTracker = null;
     }
 }

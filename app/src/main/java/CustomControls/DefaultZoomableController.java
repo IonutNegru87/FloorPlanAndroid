@@ -37,11 +37,11 @@ public class DefaultZoomableController implements ZoomableController, TransformG
     private Listener mListener = null;
 
     protected boolean mIsEnabled = false;
-    protected boolean mIsRotationEnabled = false;
+    protected boolean mIsRotationEnabled = true;
     protected boolean mIsScaleEnabled = true;
     protected boolean mIsTranslationEnabled = true;
 
-    protected float mMinScaleFactor = 1.0f;
+    protected float mMinScaleFactor = 0.3f;
     protected float mMaxScaleFactor = 3.0f;
 
     protected final RectF mViewBounds = new RectF(); //is the height and width of the imageview
@@ -369,13 +369,13 @@ public class DefaultZoomableController implements ZoomableController, TransformG
 
         //float limitscale = limitScale(imagePoint.x, imagePoint.y);
 //
-//        limitTranslation();
+     //   limitTranslation();
         if (mListener != null)
         {
             mListener.onTransformChanged(mActiveTransform);
         }
 
-        startScaleAnimation(500, getScaleFactor(), scale, imagePoint);
+      //  startScaleAnimation(500, getScaleFactor(), scale, imagePoint);
 
         //mPreviousTransform.set(mActiveTransform);
         //float targetZoom = (saveScale == mMinScaleFactor) ? mMaxScaleFactor : mMinScaleFactor;

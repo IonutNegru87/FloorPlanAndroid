@@ -41,7 +41,7 @@ public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy> imple
 
     private static final Class<?> TAG = ZoomableDraweeView.class;
 
-    private static final float HUGE_IMAGE_SCALE_FACTOR_THRESHOLD = 1.1f;
+    private static final float HUGE_IMAGE_SCALE_FACTOR_THRESHOLD = 0.3f;
 
     private final RectF mImageBounds = new RectF();
     private final RectF mViewBounds = new RectF();
@@ -262,8 +262,7 @@ public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy> imple
         }
     }
 
-    private void updateZoomableControllerBounds()
-    {
+    private void updateZoomableControllerBounds() {
         getHierarchy().getActualImageBounds(mImageBounds);
         mViewBounds.set(0, 0, getWidth(), getHeight());
         mZoomableController.setImageBounds(mImageBounds);

@@ -15,6 +15,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.adbelsham.HousePlans.HomeActivity;
+
 /**
  * Created by rkgarg on 01/02/16.
  */
@@ -45,8 +47,8 @@ public class GPSTracker implements LocationListener {
     }
 
     /**
-     javax.mail
-v
+     * javax.mail
+     * v
      * Function to get the user's current location
      *
      * @return
@@ -74,7 +76,7 @@ v
             Log.v("isNetworkEnabled", "=" + isNetworkEnabled);
 
             if (isGPSEnabled == false && isNetworkEnabled == false) {
-                // no network provider is enabled
+                showSettingsAlert();
             } else {
                 this.canGetLocation = true;
                 if (isNetworkEnabled) {
@@ -177,7 +179,7 @@ v
      */
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-        alertDialog.setTitle("GPS is settings");
+        alertDialog.setTitle("GPS settings");
         alertDialog
                 .setMessage("GPS is not enabled. Do you want to go to settings menu?");
         alertDialog.setPositiveButton("Settings",
@@ -201,6 +203,9 @@ v
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+        if (mContext != null && mContext instanceof HomeActivity) {
+            ((HomeActivity) mContext).setLocation(Double.toString(latitude), Double.toString(longitude));
+        }
     }
 
     @Override
