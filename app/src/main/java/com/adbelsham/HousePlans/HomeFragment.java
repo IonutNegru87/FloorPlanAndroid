@@ -64,6 +64,10 @@ public class HomeFragment extends Fragment {
         bathRoomSeekBar.setOnSeekBarChangeListener(new SeekBarListener());
         garagesSeeKBar.setOnSeekBarChangeListener(new SeekBarListener());
         toiletSeekBar.setOnSeekBarChangeListener(new SeekBarListener());
+
+        //bedRoomSeekBar.setProgress(1);
+        //bathRoomSeekBar.setProgress(1);
+        //toiletSeekBar.setProgress(1);
         return mView;
     }
 
@@ -91,50 +95,52 @@ public class HomeFragment extends Fragment {
             int index = Integer.parseInt(seekBar.getTag().toString());
             if (index == 1) {
                 int value = 1;
-                if (progresValue > 4) {
+                if (progresValue > 60) {
                     value = 4;
-                } else {
-                    if (progresValue < 1) {
-                        value = 1;
-                    } else {
-                        value = progresValue;
-                    }
+                } else if(progresValue > 40){
+                    value = 3;
+                }else if(progresValue > 20){
+                    value =2;
+                }else{
+                    value = 1;
                 }
+                bedRoomSeekBar.setProgress(progresValue);
                 bedRoomTextView.setText("Bedrooms " + value);
                 bedroomNumber = Integer.toString(value);
             } else if (index == 2) {
                 int value = 1;
-                if (progresValue > 2) {
-                    value = 2;
-                } else {
-                    if (progresValue < 1) {
+
+                    if (progresValue == 0) {
                         value = 1;
-                    } else {
-                        value = progresValue;
+                    } else if(progresValue > 15) {
+                        value = 2;
                     }
-                }
+
+                bathRoomSeekBar.setProgress(progresValue);
                 bathRoomTextView.setText("Bathrooms " + value);
                 bathroomNumber = Integer.toString(value);
             } else if (index == 3) {
                 int value = 0;
-                if (progresValue > 2) {
+                if (progresValue > 25) {
                     value = 2;
-                } else {
-                    value = progresValue;
+                } else if (progresValue ==0) {
+                    value = 0;
+                }else{
+                    value= 1;
                 }
+                garagesSeeKBar.setProgress(progresValue);
                 garagesNumner = Integer.toString(value);
                 garagesTextView.setText("Garages " + value);
             } else if (index == 4) {
                 int value = 1;
-                if (progresValue > 3) {
+                if (progresValue > 40) {
                     value = 3;
-                } else {
-                    if (progresValue < 1) {
-                        value = 1;
-                    } else {
-                        value = progresValue;
-                    }
+                } else if(progresValue>20){
+                    value = 2;
+                }else{
+                    value = 1;
                 }
+                toiletSeekBar.setProgress(progresValue);
                 toiletsNumber = Integer.toString(value);
                 toiletTextView.setText("Toilets " + value);
             }

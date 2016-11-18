@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(Response response) {
                         progressView.setVisibility(View.GONE);
                         LoginResponse loginResponseObj = (LoginResponse) response.body();
-                        if (loginResponseObj.getError().equals("0")) {
+                        if (loginResponseObj.getSuccess().equals("1")) {
                             AppCommon.getInstance(LoginActivity.this).setIsLogin(true);
                             AppCommon.getInstance(LoginActivity.this).setUserID(loginResponseObj.getUserDetail().getId());
                             AppCommon.getInstance(LoginActivity.this).setLatitude(loginResponseObj.getUserDetail().getLat());
@@ -114,6 +114,13 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.registerButton)
     public void registerButtonClick() {
         Intent registerIntent = new Intent(this, RegistrationActivity.class);
+        startActivity(registerIntent);
+        this.finish();
+    }
+
+    @OnClick(R.id.forgotPasswordBtn)
+    public void forgotPasswordClick() {
+        Intent registerIntent = new Intent(this, ForgotPasswodActivity.class);
         startActivity(registerIntent);
         this.finish();
     }

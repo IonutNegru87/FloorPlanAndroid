@@ -106,7 +106,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     public void onResponse(Response response) {
                         progressView.setVisibility(View.GONE);
                         ApiResponse.Registration registrationObj = (Registration) response.body();
-                        if (registrationObj.getError().equals("0")) {
+                        if (registrationObj.getSuccess().equals("1")) {
                             showSuccessfulDialog("Registration Successfully!");
                         } else {
                             AppCommon.showDialog(RegistrationActivity.this, registrationObj.getMsg());

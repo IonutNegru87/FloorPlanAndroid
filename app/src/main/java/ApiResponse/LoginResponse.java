@@ -5,22 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
 
-    @SerializedName("error")
-    public String error;
+    @SerializedName("success")
+    public String success;
 
     @SerializedName("msg")
     public String msg;
 
     @SerializedName("user-detail")
     public UserDetail userDetail;
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
 
     public String getMsg() {
         return msg;
@@ -36,5 +28,13 @@ public class LoginResponse {
 
     public void setUserDetail(UserDetail userDetail) {
         this.userDetail = userDetail;
+    }
+
+    public String getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(String success) {
+        this.success = success;
     }
 }

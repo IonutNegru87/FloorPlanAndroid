@@ -1,6 +1,7 @@
 package API;
 
 import ApiResponse.FavouriteResponse;
+import ApiResponse.ForgetPasswordResponse;
 import ApiResponse.LoginResponse;
 import ApiResponse.LogoutResponse;
 import ApiResponse.PlanOrderResponse;
@@ -77,6 +78,12 @@ public interface FloorPlanService {
     Call<PurchaseAppResponse> purchaseApp(
             @Query("id") String user_id,
             @Query("is_purchase") String isPurchase //0,1
+    );
+
+
+    @GET("forget_pass.php")
+    Call<ForgetPasswordResponse> forgotPassword(
+            @Query("email") String email
     );
 
 }

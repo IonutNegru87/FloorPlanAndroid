@@ -39,7 +39,7 @@
                     android:progressDrawable="@drawable/progress"
                     android:thumb="@drawable/thumb"
                     android:maxHeight="8dip"
-                    android:max="4"
+                    android:max="80"
                     android:tag="1" />
 
                 <TextView
@@ -68,7 +68,7 @@
                     android:progressDrawable="@drawable/progress"
                     android:thumb="@drawable/thumb"
                     android:maxHeight="8dip"
-                    android:max="2"
+                    android:max="50"
                     android:tag="2" />
 
                 <TextView
@@ -97,7 +97,7 @@
                     android:progressDrawable="@drawable/progress"
                     android:thumb="@drawable/thumb"
                     android:maxHeight="8dip"
-                    android:max="2"
+                    android:max="50"
                     android:tag="3" />
 
                 <TextView
@@ -127,7 +127,7 @@
                     android:progressDrawable="@drawable/progress"
                     android:thumb="@drawable/thumb"
                     android:maxHeight="8dip"
-                    android:max="4"
+                    android:max="60"
                     android:tag="4" />
 
                 <TextView
