@@ -1,5 +1,7 @@
 package com.adbelsham.HousePlans;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +22,7 @@ import Adapter.PlansAdapter;
 import ApiResponse.FavouriteResponse;
 import ApiResponse.PlanData;
 import ApiResponse.PlanResponse;
+import ApiResponse.PurchaseAppResponse;
 import Infrastructure.AppCommon;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -28,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlanDetailActivity extends AppCompatActivity {
+public class PlanDetailActivity extends IAPActivity {
 
     @InjectView(R.id.planPic)
     SimpleDraweeView planPic;
@@ -103,11 +106,51 @@ public class PlanDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.seeLocationBtn)
     public void seeLocationBtn() {
-        Gson gson = new Gson();
-        String planDataString = gson.toJson(planData);
-        Intent mapIntent = new Intent(this, MapsActivity.class);
-        mapIntent.putExtra("detailObj", planDataString);
-        startActivity(mapIntent);
+        if (AppCommon.getInstance(this).isPurchased()) {
+            Gson gson = new Gson();
+            String planDataString = gson.toJson(planData);
+            Intent mapIntent = new Intent(this, MapsActivity.class);
+            mapIntent.putExtra("detailObj", planDataString);
+            startActivity(mapIntent);
+        } else {
+            setKey(this.getResources().getString(R.string.PURCHASE_APP), this);
+        }
+    }
+
+    void setData(String pID) {
+        if (pID.equals(this.getResources().getString(
+                R.string.PURCHASE_PLAN))) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.Plan_purchased));
+            builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    AppCommon.getInstance(PlanDetailActivity.this).setIsPurchased(true);
+                    Gson gson = new Gson();
+                    String planDataString = gson.toJson(planData);
+                    Intent mapIntent = new Intent(PlanDetailActivity.this, MapsActivity.class);
+                    mapIntent.putExtra("detailObj", planDataString);
+                    startActivity(mapIntent);
+                    purchaseApp();
+                }
+            });
+            builder.show();
+        }
+    }
+
+    public void purchaseApp() {
+        FloorPlanService fp = ServiceGenerator.createService(FloorPlanService.class);
+        Call call = fp.purchaseApp(AppCommon.getInstance(this).getUserID(), Boolean.toString(AppCommon.getInstance(this).isPurchased()));
+        call.enqueue(new Callback<PurchaseAppResponse>() {
+            @Override
+            public void onResponse(Response response) {
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+            }
+        });
     }
 
     @OnClick(R.id.pdfBtn)
@@ -120,7 +163,7 @@ public class PlanDetailActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.planPic)
-    public void picClick(){
+    public void picClick() {
         Gson gson = new Gson();
         String planDataString = gson.toJson(planData);
         Intent fullPlanActivityIntent = new Intent(this, FullPlanActivity.class);

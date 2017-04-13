@@ -68,7 +68,7 @@ public class FavouritesFragment extends Fragment {
                         plansAdapter = new PlansAdapter(getActivity(), planDataList);
                         favouritesRecycleView.setAdapter(plansAdapter);
                     } else {
-
+                        AppCommon.showDialog(getActivity(), getActivity().getResources().getString(R.string.noPlanFound));
                     }
                 }
 

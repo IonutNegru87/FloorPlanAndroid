@@ -66,6 +66,7 @@
     <string name="PURCHASE_APP">com.adbelsham.houseplans</string>
     <string name="PURCHASE_PLAN">com.adbelsham.purchaseplans</string>
     <string name="networkTitle">Internet connection is not available.</string>
+    <string name="noPlanFound">No Plan Found.</string>
     <string name="IAP_BASE64_String">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApWvSOpwXIpYoxO0Ee/M17h6wDN35T4wtUfh3ynX5dgFSkKqWu14groQ660P2GKFcB9ELVovyNv+PWdJfxsAf+v1GtNbN4uoojYTVQFGtju89joLsE3tkWcp98MPRWBJOu4H2EDIPmDw8IjNgrjNB2sM0JJi2Al2WL7Q3KcN5BRVof8gu5O4VLtXyS2dtbCyMSvxh5q4L13PuBZ8Wm73tLqumP+8wuhROugCVr3tRb5I9Jaa17uu1H6bXzR/9B789t6c7RYeV1GvwfP+OXT+a5RRozdRp9F8a3mLvQltq13drKoQbGQcRA3mC4kp+aDOYDF0cT/CrDBZu+QUvhTdG5QIDAQAB</string>
 
     <string name="Plan_Already_Purchased">Plan already purchased.</string>

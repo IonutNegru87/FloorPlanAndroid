@@ -32,12 +32,8 @@ import util.IabResult;
 import util.Inventory;
 import util.Purchase;
 
-public class PurchasePlanActivity extends AppCompatActivity {
+public class PurchasePlanActivity extends IAPActivity {
 
-    public IabHelper mHelper;
-    boolean mIsPremium = false;
-    String productID;
-    static final int RC_REQUEST = 10001;
     PlanData planData;
 
     @Override
@@ -61,63 +57,7 @@ public class PurchasePlanActivity extends AppCompatActivity {
         if (planData.getIs_purchase().equals("1")) {
             alert(getResources().getString(R.string.Plan_Already_Purchased));
         } else {
-            setKey(getResources().getString(R.string.PURCHASE_PLAN));
-        }
-    }
-
-
-    public void setKey(String productID) {
-        this.productID = productID;
-        String base64EncodedPublicKey = getResources().getString(R.string.IAP_BASE64_String);
-        if (base64EncodedPublicKey.contains("CONSTRUCT_YOUR")) {
-            throw new RuntimeException(
-                    "Please put your app's public key in MainActivity.java. See README.");
-        }
-        if (this.getPackageName().startsWith("com.example")) {
-            throw new RuntimeException(
-                    "Please change the sample's package name! See README.");
-        }
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
-        mHelper.enableDebugLogging(true);
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                if (!result.isSuccess()) {
-                    complain("Problem setting up in-app billing: " + result);
-                    return;
-                }
-
-                if (mHelper == null)
-                    return;
-                mHelper.queryInventoryAsync(mGotInventoryListener);
-            }
-        });
-    }
-
-    IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-        public void onQueryInventoryFinished(IabResult result,
-                                             Inventory inventory) {
-            if (mHelper == null)
-                return;
-            // Is it a failure?
-            if (result.isFailure()) {
-                complain("Failed to query inventory: " + result);
-                return;
-            }
-
-            Purchase premiumPurchase = inventory.getPurchase(productID);
-            mIsPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-            onBuy();
-        }
-    };
-
-    public void onBuy() {
-        if (!mIsPremium) {
-            String payload = "";
-            mHelper.launchPurchaseFlow((Activity) this, this.productID,
-                    RC_REQUEST, mPurchaseFinishedListener, payload);
-        } else {
-            alert("Item is alredy purchased");
-            setData(productID);
+            setKey(getResources().getString(R.string.PURCHASE_PLAN), this);
         }
     }
 
@@ -130,87 +70,20 @@ public class PurchasePlanActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
-                   new DownloadImage().execute();
+                    new DownloadImage().execute();
                 }
             });
             builder.show();
         }
     }
 
-    boolean verifyDeveloperPayload(Purchase p) {
-        String payload = p.getDeveloperPayload();
-        return true;
-    }
-
-    // Callback for when a purchase is finished
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-
-            // if we were disposed of in the meantime, quit.
-            if (mHelper == null)
-                return;
-            if (result.isFailure()) {
-                complain("Error purchasing: " + result);
-                return;
-            }
-            if (!verifyDeveloperPayload(purchase)) {
-                complain("Error purchasing. Authenticity verification failed.");
-                return;
-            }
-            if (purchase.getSku().equals(productID)) {
-                alert("Thank you for upgrading to premium!");
-                mIsPremium = true;
-                setData(purchase.getSku());
-                mHelper.consumeAsync(purchase, mConsumeFinishedListener);
-            }
-        }
-    };
-
-    // Called when consumption is complete
-    IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
-        public void onConsumeFinished(Purchase purchase, IabResult result) {
-            // if we were disposed of in the meantime, quit.
-            if (mHelper == null)
-                return;
-
-            if (result.isSuccess()) {
-
-            } else {
-                complain("Error while consuming: " + result);
-            }
-        }
-    };
-
-    void complain(String message) {
-
-        alert("Error: " + message);
-    }
-
-    void alert(String message) {
-        AlertDialog.Builder bld = new AlertDialog.Builder(this);
-        bld.setMessage(message);
-        bld.setNeutralButton("OK", null);
-        bld.create().show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
-            super.onActivityResult(requestCode, resultCode, data);
-        } else {
-
-        }
-    }
-
-
-    class DownloadImage extends AsyncTask<String,Void,Bitmap>{
+    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
         ProgressDialog loading;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = ProgressDialog.show(PurchasePlanActivity.this, "Downloading...", null,true,true);
+            loading = ProgressDialog.show(PurchasePlanActivity.this, "Downloading...", null, true, true);
         }
 
         @Override

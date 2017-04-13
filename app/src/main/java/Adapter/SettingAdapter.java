@@ -98,7 +98,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
                 case 1:
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/html");
-                    intent.putExtra(Intent.EXTRA_EMAIL, "");
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "info@floorplansapp.net" });
                     intent.putExtra(Intent.EXTRA_SUBJECT, "Query");
                     intent.putExtra(Intent.EXTRA_TEXT, "");
                     activityCtx.startActivity(Intent.createChooser(intent, "Send Email"));
