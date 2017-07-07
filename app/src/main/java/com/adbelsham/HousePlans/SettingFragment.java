@@ -1,5 +1,6 @@
 package com.adbelsham.HousePlans;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import Adapter.SettingAdapter;
 import Infrastructure.AppCommon;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 public class SettingFragment extends Fragment {
@@ -41,11 +43,16 @@ public class SettingFragment extends Fragment {
         return mView;
     }
 
+
     public void updateLocation(String latitude, String longitude) {
         if (adapter.gpsTracker != null) {
             AppCommon.getInstance(getActivity()).setLatitude(latitude);
             AppCommon.getInstance(getActivity()).setLongitude(longitude);
-            AppCommon.showDialog(getActivity(), "Location update successfully!");
+//            AppCommon.showDialog(getActivity(), "Location update successfully!");
+            Intent locationIntent = new Intent(getContext(), Location_Activity.class);
+            locationIntent.putExtra("lat",latitude);
+            locationIntent.putExtra("long",longitude);
+            startActivity(locationIntent);
             adapter.makeTrackerNil();
         }
     }

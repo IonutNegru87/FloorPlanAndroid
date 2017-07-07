@@ -44,8 +44,8 @@ public class FullPlanActivity extends AppCompatActivity {
                 .setProgressBarImage(new ProgressBarDrawable())
                 .build();
 
-        draweeView.setController(AppCommon.getDraweeController(draweeView, imageUrl, 1000));
-       // draweeView.setController(ctrl);
+        draweeView.setController(AppCommon.getDraweeController(draweeView, imageUrl, 200));
+      //  draweeView.setController(ctrl);
         draweeView.setHierarchy(hierarchy);
     }
 

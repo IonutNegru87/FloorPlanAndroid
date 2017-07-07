@@ -71,4 +71,6 @@
 
     <string name="Plan_Already_Purchased">Plan already purchased.</string>
     <string name="Plan_purchased">Plan purchased successfully, Plan download on your phone gallery</string>
+    <string name="search_hint">Enter Location</string>
+    <string name="search_text">Save</string>
 </resources>

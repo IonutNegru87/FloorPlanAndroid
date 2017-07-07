@@ -16,6 +16,7 @@ import com.adbelsham.HousePlans.AboutUsActivity;
 import com.adbelsham.HousePlans.ChangePasswodActivity;
 import com.adbelsham.HousePlans.FAQActivity;
 import com.adbelsham.HousePlans.HomeActivity;
+import com.adbelsham.HousePlans.Location_Activity;
 import com.adbelsham.HousePlans.LoginActivity;
 import com.adbelsham.HousePlans.PrivacyActivity;
 import com.adbelsham.HousePlans.R;
@@ -118,6 +119,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.DataHold
                 case 5:
                     gpsTracker = new GPSTracker(activityCtx);
                     break;
+
                 case 6:
                     showLogoutDialog();
                     break;
