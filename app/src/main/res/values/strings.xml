@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">FloorPlan</string>
+    <string name="app_name">HousePlan</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="Home_desc">What Do You Require? Will Match Any One Of The Four Options.</string>
 
-    <string name="APP_TITLE"> Floor Plans</string>
+    <string name="APP_TITLE"> House Plans</string>
     <string name="REGISTER">Register?</string>
     <string name="LOGIN">LogIn</string>
     <string name="Forgot_password">Forgot Password?</string>
